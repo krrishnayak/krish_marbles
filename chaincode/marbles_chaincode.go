@@ -421,7 +421,7 @@ func (t *SimpleChaincode) set_user(stub shim.ChaincodeStubInterface, args []stri
 		fmt.Println("-newShipper-")
 		fmt.Println(newShipper)
 
-	res.ShipTo=string(newShipper)														//change the user
+	res.ShipTo=newShipper													//change the user
 
 	jsonAsBytes, _ := json.Marshal(res)
 	err = stub.PutState(args[0], jsonAsBytes)								//rewrite the marble with id as key
