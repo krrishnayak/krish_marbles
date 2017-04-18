@@ -83,12 +83,14 @@ type BOL struct{
 }
 
 type ShipTo struct{
+		ShipTo struct{
 		Name string 					
 		Address string 
 		ZIP int 
 		City string 
 		Country int 
 		Phone string 
+	}
 	}
 //--------------------------------
 
@@ -401,27 +403,13 @@ func (t *SimpleChaincode) set_user(stub shim.ChaincodeStubInterface, args []stri
 	}
 	res := BOL{}
 	json.Unmarshal(marbleAsBytes, &res)										//un stringify it aka JSON.parse()
-	fmt.Println("-res-")
-	fmt.Println(res)
-
-	fmt.Println(res.ShipFrom)
-	fmt.Println(res.ShipTo)
-	
-
-	//krishna
-	//set the current user to previous user
-	
-	//previousOwner, _ := json.Marshal(res.ShipTo)
 
 	res.ShipFrom = res.ShipTo
 	
 	//set the new user to current user
 	newShipper:=ShipTo{}
 	json.Unmarshal([]byte(args[1]), &newShipper)
-		fmt.Println("-newShipper-")
-		fmt.Println(newShipper)
-
-	res.ShipTo=newShipper													//change the user
+	res.ShipTo=newShipper.ShipTo												//change the user
 
 	jsonAsBytes, _ := json.Marshal(res)
 	err = stub.PutState(args[0], jsonAsBytes)								//rewrite the marble with id as key
